@@ -9,4 +9,6 @@ class Account < ApplicationRecord
   def jwt_payload
     super
   end
+
+  enum role: [:user, :admin]
 end
