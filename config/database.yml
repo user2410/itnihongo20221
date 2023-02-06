@@ -15,6 +15,10 @@
 # gem 'pg'
 #
 default: &default
+  host: db.btpjltqyaricjdlgaixg.supabase.co
+  port: 5432
+  username: postgres
+  password: TSoSKaI0pYertspZ
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
