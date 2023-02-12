@@ -43,6 +43,19 @@ class PostsController < ApplicationController
     end
   end
 
+  # PUT /posts?post_id=1&topic_id=1
+  def assign_to_topic
+    authenticate_account!
+    queries = request.query_parameters
+    post_id = queries[:post_id]
+    topic_id = queries[:topic_id]
+    # puts topic_id, post_id
+
+    post = Post.find(post_id)
+    topic = Topic.find(topic_id)
+    post.topics << topic
+  end
+
   # DELETE /posts/1
   def destroy
     authenticate_account!
