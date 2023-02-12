@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_12_091336) do
+ActiveRecord::Schema.define(version: 2023_02_12_143637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_posts", force: :cascade do |t|
+    t.integer "account_id"
+    t.integer "post_id"
+    t.integer "reaction"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -43,6 +51,12 @@ ActiveRecord::Schema.define(version: 2023_02_12_091336) do
   create_table "posts_topics", id: false, force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "topic_id", null: false
+  end
+
+  create_table "references", force: :cascade do |t|
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "topics", force: :cascade do |t|

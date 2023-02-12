@@ -9,6 +9,7 @@ class Account < ApplicationRecord
   def jwt_payload
     super
   end
-
+  has_many :account_posts
+  has_many :posts, through: :account_posts
   enum role: [:user, :admin]
 end
