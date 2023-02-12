@@ -37,8 +37,11 @@ class Accounts::SessionsController < Devise::SessionsController
 
   def respond_to_on_destroy
     jwt_payload = JWT.decode(request.headers['Authorization'].split(' ')[1],
-                             Rails.application.credentials.fetch(:secret_key_base)).first
-    current_account = Account.find(jwt_payload['sub'])
+                             ENV['SECRET_KEY_BASE']).first
+    account_id = jwt_payload['sub']
+    current_account = Account.find(account_id)
+    session.delete(account_id)
+    sign_out current_account
     if current_account
       render json: { message: 'Signed out successfully' }, status: :ok
     else
@@ -46,7 +49,7 @@ class Accounts::SessionsController < Devise::SessionsController
     end
   rescue NoMethodError => _e
     render json: { message: 'No active session' }, status: :unauthorized
-  rescue JWT::VerificationError => e
+  rescue JWT::VerificationError => _e
     render json: { message: 'Invalid token' }, status: :unauthorized
   end
 end
