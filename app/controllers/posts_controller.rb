@@ -3,9 +3,12 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
-
-    render json: @posts, include: [:topics]
+    limit = params[:limit] || 100
+    offset = params[:offset] || 0
+    # puts limit, offset
+    @posts = Post.limit(limit).offset(offset).all
+    
+    render json: @posts
   end
 
   # GET /posts/1
@@ -46,10 +49,9 @@ class PostsController < ApplicationController
   # PUT /posts?post_id=1&topic_id=1
   def assign_to_topic
     authenticate_account!
-    queries = request.query_parameters
-    post_id = queries[:post_id]
-    topic_id = queries[:topic_id]
-    # puts topic_id, post_id
+    post_id = params[:post_id]
+    topic_id = params[:topic_id]
+    puts topic_id, post_id
 
     post = Post.find(post_id)
     topic = Topic.find(topic_id)

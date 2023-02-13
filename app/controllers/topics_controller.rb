@@ -3,9 +3,12 @@ class TopicsController < ApplicationController
 
   # GET /topics
   def index
-    @topics = Topic.all
+    limit = params[:limit] || 100
+    offset = params[:offset] || 0
 
-    render json: @topics, include: [:posts]
+    @topics = Topic.limit(limit).offset(offset).all
+    
+    render json: @topics
   end
 
   # GET /topics/1
