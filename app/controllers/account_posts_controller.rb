@@ -14,6 +14,7 @@ class AccountPostsController < ApplicationController
       account.posts << post
       account.save
       render json: {message: ['success']}
+      return
     end
     render json: {message: ['record existed']}
   end
@@ -25,6 +26,7 @@ class AccountPostsController < ApplicationController
   account_post = AccountPost.find_by(account: account, post: post)
   if account_post.nil?
     render json: { errors: ['Could not find account post'] }, status: :not_found
+    return
   end
   if account_post.reaction == 1
     account_post.update(reaction: 0)
@@ -42,6 +44,7 @@ class AccountPostsController < ApplicationController
   account_post = AccountPost.find_by(account: account, post: post)
   if account_post.nil?
     render json: { errors: ['Could not find account post'] }, status: :not_found
+    return
   end
   account_post.destroy
   render json: { message: 'success' }, status: :ok
