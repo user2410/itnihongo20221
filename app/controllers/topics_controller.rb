@@ -5,12 +5,12 @@ class TopicsController < ApplicationController
   def index
     @topics = Topic.all
 
-    render json: @topics
+    render json: @topics, include: [:posts]
   end
 
   # GET /topics/1
   def show
-    render json: @topic
+    render json: @topic, include: [:posts]
   end
 
   # POST /topics
@@ -44,7 +44,7 @@ class TopicsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic
-      @topic = Topic.find(params[:id])
+      @topic = Topic.includes(:topics).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
