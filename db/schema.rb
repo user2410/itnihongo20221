@@ -55,8 +55,10 @@ ActiveRecord::Schema.define(version: 2023_02_12_143637) do
 
   create_table "references", force: :cascade do |t|
     t.string "link"
+    t.bigint "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_references_on_post_id"
   end
 
   create_table "topics", force: :cascade do |t|
